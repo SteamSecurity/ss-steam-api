@@ -80,7 +80,7 @@ const profile_filler_responses = [
 		persona_name: 'Little',
 		in_game: false,
 		game_info: {},
-		online_state: undefined,
+		online_state: '0',
 		privacy: '3',
 		avatar: 'https://avatars.akamai.steamstatic.com/3ec585bcad173e7157fc181ffbd289ae5916f7c6_full.jpg',
 		avatar_mid: 'https://avatars.akamai.steamstatic.com/3ec585bcad173e7157fc181ffbd289ae5916f7c6_medium.jpg',

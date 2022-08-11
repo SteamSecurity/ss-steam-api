@@ -1,0 +1,36 @@
+{
+	"name": "ss-steam-api",
+	"version": "0.1.0",
+	"description": "An API wrapper for Steam used by SteamSecurity.org",
+	"main": "index.js",
+	"scripts": {
+		"test": "node test_local.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://gitlab.com/steamsecurity/SS-Steam-API.git"
+	},
+	"keywords": [
+		"api",
+		"steam",
+		"trading",
+		"reputation",
+		"wrapper",
+		"nodejs",
+		"javascript"
+	],
+	"author": "SteamSecurity.org",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://gitlab.com/steamsecurity/SS-Steam-API/issues"
+	},
+	"homepage": "https://gitlab.com/steamsecurity/SS-Steam-API#readme",
+	"dependencies": {
+		"axios": "^0.27.2",
+		"xml2json": "^0.12.0"
+	},
+	"devDependencies": {
+		"console-table-printer": "^2.11.0",
+		"dotenv": "^16.0.1"
+	}
+}

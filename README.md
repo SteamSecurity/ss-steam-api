@@ -118,7 +118,10 @@ See test_local.js for more examples.
       profile_created: Number,
       location: String,
       real_name: String,
-      comment_permissions: Boolean
+      comment_permissions: Boolean,
+      steamid2: String,
+    	steamid3: String,
+    	steamid64: String,
     }
     ```
 

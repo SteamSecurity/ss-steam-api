@@ -27,6 +27,7 @@
 	"homepage": "https://gitlab.com/steamsecurity/SS-Steam-API#readme",
 	"dependencies": {
 		"axios": "^0.27.2",
+		"steamid": "^2.0.0",
 		"xml2json": "^0.12.0"
 	},
 	"devDependencies": {

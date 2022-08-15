@@ -1,5 +1,6 @@
 const axios = require('axios').default;
 const xml_parser = require('xml2json');
+const SteamID = require('steamid');
 
 // -- XML parser settings -----
 const xml2json_options = {
@@ -28,17 +29,11 @@ SteamAPI.getReputation = function (steamid64) {
 	return new Promise(async (resolve) => {
 		// API Key check -----------------------------------
 		// If the Steam API key is not set, immediately error.
-		if (!SteamAPI.steam_api_key) {
-			return resolve({
-				error: 0,
-				error_message: 'Steam Web API key has not been set. Please read the documentation for instructions.',
-			});
-		}
+		if (!SteamAPI.steam_api_key)
+			return resolve(newResponseError('Steam Web API key has not been set. Please read the documentation for instructions.'));
 
 		// Basic check to make sure we have a valid SteamID64
-		if (!isSteamID64(steamid64)) {
-			return resolve({ error: 0, error_message: 'Not a valid SteamID64' });
-		}
+		if (!isSteamID64(steamid64)) return resolve(newResponseError('Not a valid SteamID64'));
 
 		// Cache -------------------------------------------
 		// First, check to see if we have their information cached.
@@ -105,17 +100,11 @@ SteamAPI.getProfile = function (steamid64) {
 	return new Promise(async (resolve) => {
 		// API Key check -----------------------------------
 		// If the Steam API key is not set, immediately error.
-		if (!SteamAPI.steam_api_key) {
-			return resolve({
-				error: 0,
-				error_message: 'Steam Web API key has not been set. Please read the documentation for instructions.',
-			});
-		}
+		if (!SteamAPI.steam_api_key)
+			return resolve(newResponseError('Steam Web API key has not been set. Please read the documentation for instructions.'));
 
 		// Basic check to make sure we have a valid SteamID64
-		if (!isSteamID64(steamid64)) {
-			return resolve({ error: 0, error_message: 'Not a valid SteamID64' });
-		}
+		if (!isSteamID64(steamid64)) return resolve(newResponseError('Not a valid SteamID64'));
 
 		// Cache -------------------------------------------
 		// First, check to see if we have their information cached.
@@ -145,6 +134,8 @@ SteamAPI.getProfile = function (steamid64) {
 			return resolve({ error: all_requests[0].status, error_message: steam_xml_response_full.response.error });
 		}
 
+		let sid = new SteamID(`${steamid64}`);
+
 		let profile = {
 			custom_url: objectOrString(steam_xml_response?.customURL) || null,
 			url: `https://steamcommunity.com/profiles/${steamid64}`,
@@ -166,6 +157,9 @@ SteamAPI.getProfile = function (steamid64) {
 			real_name: objectOrString(steam_xml_response?.realname),
 			// TODO: Banned users have a comment_permissions of 2?
 			comment_permissions: steam_json_response?.commentpermission ? true : false,
+			steamid2: sid.getSteam2RenderedID(),
+			steamid3: sid.getSteam3RenderedID(),
+			steamid64: steamid64,
 		};
 
 		// Handle the search target's game information if they are playing a game
@@ -261,6 +255,13 @@ function get(url) {
 				resolve({ error: reason.response.status, error_message: reason.message });
 			});
 	});
+}
+
+function newResponseError(message, error = 0) {
+	return {
+		error: error,
+		error_message: message,
+	};
 }
 
 function isSteamID64(id) {

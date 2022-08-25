@@ -1,10 +1,10 @@
 {
   "name": "ss-steam-api",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "An API wrapper for Steam used by SteamSecurity.org",
   "main": "index.js",
   "scripts": {
-    "test": "node test_local.js"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "console-table-printer": "^2.11.0",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "easy-logger": "gitlab:armoreddragon/easy-logger"
   }
 }

@@ -10,7 +10,6 @@ variables:
 
 stages:
   - prepare
-  - verify
   - publish
 
 install:
@@ -27,18 +26,6 @@ install:
   script:
     - npm config set -- '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
     - npm install --no-progress --no-audit --no-fund --verbose  --dev
-  only:
-    - merge_requests
-    - master
-# Runs the test suite.
-test:
-  stage: verify
-  interruptible: true
-  retry: 1
-  dependencies:
-    - install
-  script:
-    - node test_pipeline.js
   only:
     - merge_requests
     - master

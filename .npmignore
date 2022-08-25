@@ -6,3 +6,5 @@
 /images/
 test_local.js
 test_pipeline.js
+template.env
+.gitlab-ci.yml

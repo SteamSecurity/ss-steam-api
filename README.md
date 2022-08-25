@@ -23,23 +23,15 @@ Please see [Limitations](#limitations) for further details.
 # Basic usage
 
 ```js
-let steam = require('ss-steam-api');
+// There are two ways to include this module in your project
+// The first way is on a single line
+const steam = new (require('ss-steam-api'))({ key: STEAM_WEB_API_KEY });
+// Alternatively you can do it like this.
+const _steamapi_module = require('ss-steam-api');
+const steam = new _steamapi_module({ key: STEAM_WEB_API_KEY });
 
-// Required
-steam.steam_api_key = 'A valid Steam API Key'; // Set your Steam Web API Key here.
-
-// Optionally set a timeout to the SteamRep API request.
-steam.timeout = 5000; // ms to wait for a response. Default is '5000'
-
-// Optionally set request cache.
-steam.cache_results = true; // Should results be cached? Default is 'true'.
-
-// Optionally set a cache time to save requests to prevent spamming of SteamRep servers.
-steam.cache_time = 1800000; // ms to save a cached response.  Default is '1800000' (30 minutes)
-
-// Optionally enable debug mode. Not recommended for production.
-steam.debug = false; // Should debug mode be enabled? Default is 'false'
-
+// Once the package is included and properly supplied with a Steam API Key,
+// you can immediately use it.
 async function getAccountReputation() {
 	await steam.getReputation('insert-valid-STEAMID64-here').then(console.log);
 }
@@ -47,35 +39,54 @@ async function getAccountReputation() {
 getAccountReputation();
 ```
 
-See test_local.js for more examples.
+See test.js for more examples.
 
-# Properties
+# Options
 
-- ### steam_api_key
+These are set using the constructor function when including the module
+
+- ### _key_ (Required)
 
   Set this value to your Steam Web API Key.
   If left unset, this package will respond with an error alerting you to the missing key.
 
-- ### timeout
+- ### _timeout_
 
   Time to wait in milliseconds before canceling the request and returning with an error.
 
-- ### cache_results
+- ### _cache_results_
 
   A Boolean dictating whether or not automatic caching happens. Typically you do not want to change from the default value 'true', however if you are using your own cache solution, you may want to disable this.
 
-- ### cache_time
+- ### _cache_time_
 
   Time to save a cached response in milliseconds.
   This is ignored if caching is disabled.
 
-- ### cache
-
-  This is an object containing the entire cache. This can be retrieved, changed, and then reapplied as needed.
-
-- ### debug
+- ### _debug_
 
   A Boolean controlling whether or not the wrapper will run in debug mode. This is not recommended for production environments as it outputs a lot of text to the console window.
+
+The following code block is an example on how to set up ss-steam-api to have:
+
+- Steam API Key
+- Request timeout of 2 seconds
+- Not cache results
+- Set a cache time to 0 seconds
+- Enable debugging mode
+
+```js
+const options = {
+	key: STEAM_WEB_API_KEY,
+	timeout: 2000,
+	cache_results: false,
+	cache_time: 0,
+	debug: true,
+};
+
+const _steamapi_module = require('ss-steam-api');
+const steam = new _steamapi_module(options);
+```
 
 # Methods
 
@@ -107,21 +118,45 @@ See test_local.js for more examples.
       url: String,
       persona_name: String,
       in_game: Boolean,
-      game_info: Object,
+      game_info: Object, // Or null if user is not playing a game
       online_state: String,
       privacy: String,
       avatar: String,
       avatar_mid: String,
       avatar_small: String,
       account_limited: String,
-      member_since: String,
-      profile_created: Number,
+      member_since: String, // A human-readable date. Example: 'March 2, 2050'
+      profile_created: String, // A Unix timestamp of when the user was created
       location: String,
       real_name: String,
       comment_permissions: Boolean,
       steamid2: String,
-    	steamid3: String,
-    	steamid64: String,
+      steamid3: String,
+      steamid64: String,
+    }
+    ```
+
+- ### resolveVanityURL(search)
+
+  - search: The user's Vanity URL.
+
+    This returns a promise formatted as such:
+
+    ```js
+    {
+      steamid64: String,
+    }
+    ```
+
+- ### getSteamID64(data)
+
+  - data: The data to turn into a SteamID64. Can be any valid SteamID type or a vanity URL part.
+
+    This returns a promise formatted as such:
+
+    ```js
+    {
+      steamid64: String,
     }
     ```
 
@@ -131,7 +166,7 @@ Any errors with the Steam API or this wrapper should resolve the promise with bo
 
 ```js
 {
-	error: 'Status code. Almost always a direct HTTP status code from a request',
+	error: 'Status code. Often a direct HTTP status code, otherwise most likely "1"',
 	error_message: 'A more specific error message'
 }
 ```

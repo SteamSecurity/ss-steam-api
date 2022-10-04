@@ -147,6 +147,7 @@ class SteamAPI {
 				steamid2: sid.getSteam2RenderedID(),
 				steamid3: sid.getSteam3RenderedID(),
 				steamid64: steamid64,
+				summary: steam_xml_response.summary,
 			};
 
 			// Handle the search target's game information if they are playing a game

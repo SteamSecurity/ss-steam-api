@@ -133,6 +133,7 @@ const steam = new _steamapi_module(options);
       steamid2: String,
       steamid3: String,
       steamid64: String,
+      summary: String,
     }
     ```
 

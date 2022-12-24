@@ -1,13 +1,15 @@
 <div align="center">
-  <img src="https://gitlab.com/steamsecurity/SS-Steam-API/-/raw/master/images/steam-logo.png" width="750"><br>
+  <img src="https://raw.githubusercontent.com/SteamSecurity/ss-steam-api/master/images/steam-logo.png" width="750"><br>
   <b>A community made API Wrapper</b>
 </div>
 <br>
 <div align="center">
   <img src="https://img.shields.io/npm/dt/ss-steam-api?style=for-the-badge">
-  <img src="https://img.shields.io/gitlab/contributors/steamsecurity/ss-steam-api?style=for-the-badge">
-  <img src="https://img.shields.io/gitlab/issues/open-raw/steamsecurity/ss-steam-api?style=for-the-badge">
-  <img src="https://img.shields.io/gitlab/pipeline-status/steamsecurity/ss-steam-api?branch=master&style=for-the-badge">
+  <img src="https://img.shields.io/github/contributors/steamsecurity/ss-steam-api?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/steamsecurity/ss-steam-api?style=for-the-badge">
+  <img src="https://img.shields.io/github/languages/code-size/steamsecurity/ss-steam-api?style=for-the-badge">
+  <img src="https://img.shields.io/github/actions/workflow/status/steamsecurity/ss-steam-api/npm-publish.yml?style=for-the-badge">
+  
 </div>
 <br>
 

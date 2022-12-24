@@ -9,7 +9,6 @@
   <img src="https://img.shields.io/github/issues/steamsecurity/ss-steam-api?style=for-the-badge">
   <img src="https://img.shields.io/github/languages/code-size/steamsecurity/ss-steam-api?style=for-the-badge">
   <img src="https://img.shields.io/github/actions/workflow/status/steamsecurity/ss-steam-api/npm-publish.yml?style=for-the-badge">
-  
 </div>
 <br>
 

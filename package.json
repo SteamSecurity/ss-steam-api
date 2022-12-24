@@ -1,6 +1,6 @@
 {
   "name": "ss-steam-api",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An API wrapper for Steam used by SteamSecurity.org",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,6 @@
   "devDependencies": {
     "console-table-printer": "^2.11.0",
     "dotenv": "^16.0.1",
-    "easy-logger": "gitlab:armoreddragon/easy-logger"
+    "easy-logger": "github:Armored-Dragon/easy-logger"
   }
 }

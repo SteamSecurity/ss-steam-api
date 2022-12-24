@@ -21,7 +21,7 @@ let cache = { reputation: {}, profile: {}, vanity: {} };
 
 class SteamAPI {
 	constructor({ timeout = 5000, cache_time = 1800000, cache_results = true, key = null, debug = false } = {}) {
-		if (!key) throw new Error('A Steam Web API key must be supplied to use ss-steam-api');
+		if (!key) console.log('A Steam Web API key has not been set in SS-Steam-API. Please supply one.');
 
 		this.timeout = timeout;
 		this.cache_time = cache_time;
@@ -37,6 +37,8 @@ class SteamAPI {
 	 */
 	getReputation(steamid64) {
 		return new Promise(async (resolve, reject) => {
+			if (!this.key) return resolve(this._newErrorResponse('Steam Web API key was not supplied. Request was not made.', '1'));
+
 			// Make sure we have a valid SteamID64
 			if (!this._isSteamID64(steamid64)) reject(this._newErrorResponse(`${steamid64} not a valid SteamID64`));
 
@@ -96,6 +98,7 @@ class SteamAPI {
 	getProfile(steamid64) {
 		return new Promise(async (resolve, reject) => {
 			// Make sure we have a valid SteamID64
+			if (!this.key) return resolve(this._newErrorResponse('Steam Web API key was not supplied. Request was not made.', '1'));
 			if (!this._isSteamID64(steamid64)) reject(this._newErrorResponse(`${steamid64} not a valid SteamID64`));
 
 			// Check the cache
@@ -182,6 +185,7 @@ class SteamAPI {
 	 */
 	resolveVanityURL(search) {
 		return new Promise(async (resolve, reject) => {
+			if (!this.key) return resolve(this._newErrorResponse('Steam Web API key was not supplied. Request was not made.', '1'));
 			// Check the cache
 			if (this.cache_results && cache.vanity[`${search}`]) {
 				this._debugLog({ data: `${search} vanity was in cache. Resolved.` });

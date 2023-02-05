@@ -21,8 +21,6 @@ let cache = { reputation: {}, profile: {}, vanity: {} };
 
 class SteamAPI {
 	constructor({ timeout = 5000, cache_time = 1800000, cache_results = true, key = null, debug = false } = {}) {
-		if (!key) console.log('A Steam Web API key has not been set in SS-Steam-API. Please supply one.');
-
 		this.timeout = timeout;
 		this.cache_time = cache_time;
 		this.cache_results = cache_results;
@@ -112,8 +110,8 @@ class SteamAPI {
 				this._get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${this.key}&steamids=${steamid64}`),
 			]);
 			const steam_xml_response_full = JSON.parse(xml_parser.toJson(all_requests[0].data, xml2json_options));
-			const steam_xml_response = steam_xml_response_full.profile;
-			const steam_json_response = all_requests[1].data.response.players[0];
+			const steam_xml_response = steam_xml_response_full?.profile;
+			const steam_json_response = all_requests[1]?.data?.response?.players[0];
 
 			// TODO: Does this error check even do anything?
 			// Check for errors in the requests ------------------
@@ -156,13 +154,14 @@ class SteamAPI {
 			// Handle the search target's game information if they are playing a game
 			if (steam_xml_response?.onlineState === 'in-game') {
 				profile.in_game = true;
-				profile.game_info = {
-					name: steam_xml_response?.inGameInfo.gameName,
-					appid: steam_xml_response?.inGameInfo.gameLink.replace('https://steamcommunity.com/app/', ''), //TODO: Maybe replace this with REGEX?
-					icon: steam_xml_response?.inGameInfo.gameIcon,
-					logo: steam_xml_response?.inGameInfo.gameLogo,
-					logo_small: steam_xml_response?.inGameInfo.gameLogoSmall,
-				};
+				if (steam_xml_response.stateMessage !== 'In non-Steam game<br/>')
+					profile.game_info = {
+						name: steam_xml_response?.inGameInfo.gameName,
+						appid: steam_xml_response?.inGameInfo.gameLink.replace('https://steamcommunity.com/app/', ''), //TODO: Maybe replace this with REGEX?
+						icon: steam_xml_response?.inGameInfo.gameIcon,
+						logo: steam_xml_response?.inGameInfo.gameLogo,
+						logo_small: steam_xml_response?.inGameInfo.gameLogoSmall,
+					};
 			}
 
 			if (this.cache_results) {
@@ -258,7 +257,7 @@ class SteamAPI {
 				.get(url, { timeout: this.timeout })
 				.then(resolve)
 				.catch((reason) => {
-					resolve({ error: reason.response.status, error_message: reason.message });
+					resolve({ error: reason.response?.status || '1', error_message: reason.message || 'Unknown HTTP error' });
 				});
 		});
 	}
